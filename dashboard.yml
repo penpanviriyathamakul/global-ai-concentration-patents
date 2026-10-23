@@ -1,0 +1,137 @@
+# DRAFT. Two items must be confirmed before this manifest can pass the checker:
+#   1. dashboard.subject: schema 2 allows only the six subjects below, and AI patents is not one of them.
+#      Replace TODO_CONFIRM_SUBJECT once the brief confirms the allowed subject.
+#   2. topic_integrity: fill in the required fields for the confirmed subject from config/topic_profiles.yml.
+schema_version: 2
+dashboard:
+  title: AI patents by country
+  subject: TODO_CONFIRM_SUBJECT
+  question: Which countries lead AI patenting, and how has their share of world AI patents changed from 2010 to 2024?
+  audience: Policy analysts comparing national innovation in AI
+  entrypoint: app.py
+  pages:
+  - pages/1_patents.py
+  - pages/2_publications.py
+  - pages/3_investments.py
+  - pages/4_concentration.py
+  sample_environment_variable: DASHBOARD_SAMPLE_MODE
+sources:
+- id: oecd_ai_patents
+  publisher: OECD
+  title: OECD AI patent indicators
+  url: https://oecd.ai/en/trends-and-data
+  licence: Creative Commons Attribution 4.0
+  retrieved: '2026-10-23'
+  cadence: Annual with revisions
+  status: snapshot
+  notes: The sample is the 2010-2024 subset for five countries and the ALL row. Verify the URL and licence on the source page.
+datasets:
+- id: patent_counts
+  source_ids:
+  - oecd_ai_patents
+  sample: data/sample.csv
+  processed_output: data/processed.csv
+  format: csv
+  date_column: date
+  primary_key:
+  - date
+  - country_code
+  minimum_rows: 10
+  latest_observation: '2024-12-31'
+  columns:
+    date:
+      type: date
+      role: time
+      nullable: false
+      date_minimum: '2010-12-31'
+      date_maximum: '2024-12-31'
+    country_code:
+      type: string
+      role: geography
+      nullable: false
+      allowed_values:
+      - USA
+      - CHN
+      - JPN
+      - KOR
+      - DEU
+    country:
+      type: string
+      role: geography
+      nullable: false
+      allowed_values:
+      - United States
+      - China
+      - Japan
+      - Korea
+      - Germany
+    ai_patents:
+      type: integer
+      role: measure
+      nullable: false
+      unit: patents
+      minimum: 0
+      maximum: 100000
+    world_total:
+      type: integer
+      role: measure
+      nullable: false
+      unit: patents
+      minimum: 0
+      maximum: 100000
+    unit:
+      type: string
+      role: dimension
+      nullable: false
+      allowed_values:
+      - patents
+views:
+- id: patent_leaders
+  dataset_id: patent_counts
+  page: pages/1_patents.py
+  title: AI patents by country
+  unit: patents
+  source_ids:
+  - oecd_ai_patents
+  controls:
+  - key: country_filter
+    type: multiselect
+    label: Countries
+    default_value:
+    - United States
+    - China
+    - Japan
+    - Korea
+    - Germany
+    test_value:
+    - United States
+    expected_text: 'Selected: United States'
+    empty_test_value: []
+    empty_expected_text: No observations match the selected filters.
+    filter:
+      column: country
+      operator: isin
+  - key: year_select
+    type: slider
+    label: Year for ranking
+    default_value: 2024
+    test_value: 2015
+  outputs:
+  - chart
+  - metric
+  - table
+  - download
+pipeline:
+  acquisition_method: script
+  acquisition_path: src/data.py
+  transform_command:
+  - python
+  - -m
+  - src.data
+  download_declared: true
+  download_label: Download filtered data
+  date_label: Latest observation
+topic_integrity:
+  indicator_definition: Count of AI patents by priority year, identified with the OECD AI patent method (PCT applications).
+  counting_method: Whole counts from the OECD dataset; shares use the ALL row as the denominator.
+  coverage_note: Years before 2010 use an older method and are excluded from this dashboard.
