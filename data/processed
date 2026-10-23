@@ -1,0 +1,76 @@
+date,country_code,country,ai_patents,world_total,unit
+2010-12-31,CHN,China,56,1144,patents
+2011-12-31,CHN,China,78,1468,patents
+2012-12-31,CHN,China,129,1908,patents
+2013-12-31,CHN,China,243,2268,patents
+2014-12-31,CHN,China,339,2639,patents
+2015-12-31,CHN,China,575,3445,patents
+2016-12-31,CHN,China,1228,5312,patents
+2017-12-31,CHN,China,2053,7881,patents
+2018-12-31,CHN,China,2895,11296,patents
+2019-12-31,CHN,China,3763,13297,patents
+2020-12-31,CHN,China,4995,15703,patents
+2021-12-31,CHN,China,4297,15002,patents
+2022-12-31,CHN,China,4282,15911,patents
+2023-12-31,CHN,China,4454,16830,patents
+2024-12-31,CHN,China,4913,17972,patents
+2010-12-31,DEU,Germany,48,1144,patents
+2011-12-31,DEU,Germany,68,1468,patents
+2012-12-31,DEU,Germany,84,1908,patents
+2013-12-31,DEU,Germany,83,2268,patents
+2014-12-31,DEU,Germany,89,2639,patents
+2015-12-31,DEU,Germany,86,3445,patents
+2016-12-31,DEU,Germany,151,5312,patents
+2017-12-31,DEU,Germany,229,7881,patents
+2018-12-31,DEU,Germany,368,11296,patents
+2019-12-31,DEU,Germany,493,13297,patents
+2020-12-31,DEU,Germany,554,15703,patents
+2021-12-31,DEU,Germany,520,15002,patents
+2022-12-31,DEU,Germany,553,15911,patents
+2023-12-31,DEU,Germany,595,16830,patents
+2024-12-31,DEU,Germany,628,17972,patents
+2010-12-31,JPN,Japan,359,1144,patents
+2011-12-31,JPN,Japan,454,1468,patents
+2012-12-31,JPN,Japan,653,1908,patents
+2013-12-31,JPN,Japan,516,2268,patents
+2014-12-31,JPN,Japan,594,2639,patents
+2015-12-31,JPN,Japan,719,3445,patents
+2016-12-31,JPN,Japan,917,5312,patents
+2017-12-31,JPN,Japan,1265,7881,patents
+2018-12-31,JPN,Japan,1850,11296,patents
+2019-12-31,JPN,Japan,1887,13297,patents
+2020-12-31,JPN,Japan,1847,15703,patents
+2021-12-31,JPN,Japan,1696,15002,patents
+2022-12-31,JPN,Japan,1651,15911,patents
+2023-12-31,JPN,Japan,1772,16830,patents
+2024-12-31,JPN,Japan,1930,17972,patents
+2010-12-31,KOR,Korea,47,1144,patents
+2011-12-31,KOR,Korea,74,1468,patents
+2012-12-31,KOR,Korea,82,1908,patents
+2013-12-31,KOR,Korea,99,2268,patents
+2014-12-31,KOR,Korea,105,2639,patents
+2015-12-31,KOR,Korea,127,3445,patents
+2016-12-31,KOR,Korea,273,5312,patents
+2017-12-31,KOR,Korea,438,7881,patents
+2018-12-31,KOR,Korea,692,11296,patents
+2019-12-31,KOR,Korea,1047,13297,patents
+2020-12-31,KOR,Korea,1218,15703,patents
+2021-12-31,KOR,Korea,1451,15002,patents
+2022-12-31,KOR,Korea,1841,15911,patents
+2023-12-31,KOR,Korea,1817,16830,patents
+2024-12-31,KOR,Korea,1920,17972,patents
+2010-12-31,USA,United States,353,1144,patents
+2011-12-31,USA,United States,463,1468,patents
+2012-12-31,USA,United States,585,1908,patents
+2013-12-31,USA,United States,832,2268,patents
+2014-12-31,USA,United States,968,2639,patents
+2015-12-31,USA,United States,1213,3445,patents
+2016-12-31,USA,United States,1777,5312,patents
+2017-12-31,USA,United States,2595,7881,patents
+2018-12-31,USA,United States,3460,11296,patents
+2019-12-31,USA,United States,3914,13297,patents
+2020-12-31,USA,United States,4265,15703,patents
+2021-12-31,USA,United States,4246,15002,patents
+2022-12-31,USA,United States,4603,15911,patents
+2023-12-31,USA,United States,4955,16830,patents
+2024-12-31,USA,United States,5192,17972,patents
