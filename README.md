@@ -1,4 +1,4 @@
-# AI patents by country (draft)
+# AI patents by country
 
 Question: Which countries lead AI patenting, and how has their share of world AI patents changed from 2010 to 2024?
 
