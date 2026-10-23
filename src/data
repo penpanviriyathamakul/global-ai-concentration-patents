@@ -1,0 +1,74 @@
+"""Build and validate the dashboard dataset.
+
+This snapshot is built from the bundled sample (2010–2024, five countries plus the
+world total). The transform only reshapes and checks it; there is no live acquisition.
+"""
+
+from __future__ import annotations
+
+import argparse
+from pathlib import Path
+
+import pandas as pd
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SAMPLE = ROOT / "data" / "sample.csv"
+PROCESSED = ROOT / "data" / "processed.csv"
+
+COUNTRY_NAMES = {
+    "USA": "United States",
+    "CHN": "China",
+    "JPN": "Japan",
+    "KOR": "Korea",
+    "DEU": "Germany",
+}
+REQUIRED = {"date", "country_code", "country", "ai_patents", "world_total", "unit"}
+
+
+def transform(sample: pd.DataFrame) -> pd.DataFrame:
+    frame = sample.copy()
+    frame["date"] = pd.to_datetime(frame["date"], errors="raise").dt.strftime("%Y-%m-%d")
+    frame["ai_patents"] = frame["ai_patents"].astype("int64")
+    frame["world_total"] = frame["world_total"].astype("int64")
+    return frame.sort_values(["country", "date"]).reset_index(drop=True)
+
+
+def validate(frame: pd.DataFrame) -> None:
+    missing = REQUIRED.difference(frame.columns)
+    if missing:
+        raise ValueError(f"Missing columns: {sorted(missing)}")
+    if frame.isna().any().any():
+        raise ValueError("Unexpected missing values found")
+    if frame.duplicated(["date", "country_code"]).any():
+        raise ValueError("Duplicate date and country keys found")
+    if not set(frame["country_code"]).issubset(COUNTRY_NAMES):
+        raise ValueError("Unexpected country code")
+    if not (frame["country_code"].map(COUNTRY_NAMES) == frame["country"]).all():
+        raise ValueError("Country name does not match its code")
+    years = pd.to_datetime(frame["date"], errors="raise").dt.year
+    if years.min() < 2010 or years.max() > 2024:
+        raise ValueError("Date outside the documented period 2010-2024")
+    if (frame["ai_patents"] < 0).any() or (frame["ai_patents"] > frame["world_total"]).any():
+        raise ValueError("Country count must be between 0 and the world total")
+    if set(frame["unit"]) != {"patents"}:
+        raise ValueError("Unexpected unit")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--validate", action="store_true", help="Validate data/processed.csv and stop")
+    args = parser.parse_args()
+    if args.validate:
+        validate(pd.read_csv(PROCESSED))
+        print("Processed data valid")
+        return
+    frame = transform(pd.read_csv(SAMPLE))
+    validate(frame)
+    PROCESSED.parent.mkdir(parents=True, exist_ok=True)
+    frame.to_csv(PROCESSED, index=False)
+    print(f"Validated and wrote {len(frame)} rows to {PROCESSED}")
+
+
+if __name__ == "__main__":
+    main()
